@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Solicitar Reserva</h2>
+
+<form method="POST">
+    <div class="mb-3">
+        <label>Nome do responsável</label>
+        <input type="text" name="nome_responsavel" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Nome do grupo</label>
+        <input type="text" name="nome_grupo" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Telefone</label>
+        <input type="text" name="tel1" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Sala desejada</label>
+        <select name="sala_desejada" class="form-select" required>
+            {% for sala in salas %}
+            <option value="{{ sala.id_sala }}">{{ sala.nome_sala }} ({{ sala.status_disp }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Data</label>
+        <input type="date" name="data_reserva" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Hora inicial</label>
+        <input type="time" name="hora_inicial" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Hora final</label>
+        <input type="time" name="hora_final" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Observação</label>
+        <textarea name="observacao" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+</form>
+{% endblock %}

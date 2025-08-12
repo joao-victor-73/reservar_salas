@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Reservas</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Responsável</th>
+            <th>Grupo</th>
+            <th>Sala</th>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in reservas %}
+        <tr>
+            <td>{{ r.id_reserva }}</td>
+            <td>{{ r.nome_responsavel }}</td>
+            <td>{{ r.nome_grupo }}</td>
+            <td>{{ r.sala.nome_sala }}</td>
+            <td>{{ r.data_reserva.strftime('%d/%m/%Y') }}</td>
+            <td>{{ r.hora_inicial.strftime('%H:%M') }} - {{ r.hora_final.strftime('%H:%M') }}</td>
+            <td>{{ r.status_fixo }}</td>
+            <td>
+                {% if r.status_fixo == 'Pendente' %}
+                <form method="POST" action="{{ url_for('alterar_status_reserva', id_reserva=r.id_reserva, novo_status='Confirmada') }}" style="display:inline">
+                    <button class="btn btn-success btn-sm">Aprovar</button>
+                </form>
+                <form method="POST" action="{{ url_for('alterar_status_reserva', id_reserva=r.id_reserva, novo_status='Negada') }}" style="display:inline">
+                    <button class="btn btn-danger btn-sm">Recusar</button>
+                </form>
+                {% else %}
+                —
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
